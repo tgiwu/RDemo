@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">RDemo</string>
+    <string name="registry_nickname" tools:ignore="MissingTranslation">Nickname</string>
+    <string name="registry_phone" tools:ignore="MissingTranslation">Phone</string>
+    <string name="registry_code" tools:ignore="MissingTranslation">Code</string>
+    <string name="registry_password" tools:ignore="MissingTranslation">Password</string>
+    <string name="registry_btn" tools:ignore="MissingTranslation">Registry</string>
+    <string name="registry_request_code" tools:ignore="MissingTranslation">Request Code</string>
+    <string name="registry_code_has_send" tools:ignore="MissingTranslation">Code has sent, check it please !</string>
+
+    <string name="login_btn" tools:ignore="MissingTranslation">Login</string>
+</resources>
