@@ -35,6 +35,7 @@ object MyExecutor : BackgroundExecutor {
                 }
 
                 override fun onError(e: Throwable) {
+                    e.printStackTrace()
                     mBackgroundRunnable.onError(e)
                 }
 

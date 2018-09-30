@@ -7,6 +7,12 @@
     <string name="registry_btn" tools:ignore="MissingTranslation">Registry</string>
     <string name="registry_request_code" tools:ignore="MissingTranslation">Request Code</string>
     <string name="registry_code_has_send" tools:ignore="MissingTranslation">Code has sent, check it please !</string>
+    <string name="registry_go_to_login" tools:ignore="MissingTranslation">Have a account login now</string>
+    <string name="registry_nickname_empty" tools:ignore="MissingTranslation">Nickname can not be empty</string>
+    <string name="registry_code_empty" tools:ignore="MissingTranslation">Verification code can not be empty</string>
 
     <string name="login_btn" tools:ignore="MissingTranslation">Login</string>
+    <string name="login_go_to_registry" tools:ignore="MissingTranslation">registry now</string>
+    <string name="login_phone_empty" tools:ignore="MissingTranslation">Phone can not be empty !</string>
+    <string name="login_password_empty" tools:ignore="MissingTranslation">Password can not be empty !</string>
 </resources>

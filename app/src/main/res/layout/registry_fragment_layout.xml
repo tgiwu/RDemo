@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
+        android:ems="20"
         android:hint="@string/registry_nickname"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,32 +22,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/registryPhone"
+        android:id="@+id/registryCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/registry_phone"
+        android:ems="20"
+        android:hint="@string/registry_code"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registryNickname" />
+        app:layout_constraintTop_toBottomOf="@+id/registryPhone" />
 
     <EditText
-        android:id="@+id/registryCode"
+        android:id="@+id/registryPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/registry_code"
-        android:inputType="number"
+        android:layout_marginEnd="8dp"
+        android:ems="11"
+        android:hint="@string/registry_phone"
+        android:inputType="phone"
         app:layout_constraintEnd_toStartOf="@+id/registryRequestCodeBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registryPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/registryNickname" />
 
     <EditText
         android:id="@+id/registryPassword"
@@ -55,7 +58,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
+        android:ems="20"
         android:hint="@string/registry_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +72,33 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/registry_request_code"
-        app:layout_constraintBaseline_toBaselineOf="@+id/registryCode"
+        app:layout_constraintBaseline_toBaselineOf="@+id/registryPhone"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/registryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/registry_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registryPassword" />
+
+    <TextView
+        android:id="@+id/goToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:text="@string/registry_go_to_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registryBtn" />
 
 </android.support.constraint.ConstraintLayout>

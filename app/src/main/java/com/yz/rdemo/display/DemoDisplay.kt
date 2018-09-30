@@ -1,11 +1,15 @@
 package com.yz.rdemo.display
 
 import android.annotation.SuppressLint
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import com.google.common.base.Preconditions
 import com.yz.rdemo.R
+import com.yz.rdemo.fragments.LoginFragment
 import com.yz.rdemo.fragments.RegistryFragment
+import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 @SuppressLint("StaticFieldLeak")
@@ -26,15 +30,28 @@ class DemoDisplay(): IMainDisplay {
     }
 
     override fun showRegistry() {
+        Preconditions.checkNotNull(mActivity, NullPointerException("activity is null"))
         if (checkMainContent()) {
-            mActivity?.supportFragmentManager?.
-                    beginTransaction()?.
-                    add(R.id.main_content, RegistryFragment.instance)
-                    ?.commit()
+            if (mActivity!!.supportFragmentManager?.findFragmentByTag("login") == null)
+                getTransaction()?.add(R.id.main_content, RegistryFragment.instance, "registry")?.commit()
+            else
+                getTransaction()?.replace(R.id.main_content, RegistryFragment.instance, "registry")?.commit()
         }
     }
 
     override fun showLogin() {
+        Preconditions.checkNotNull(mActivity, NullPointerException("activity is null"))
+        if (checkMainContent()) {
+            if (mActivity!!.supportFragmentManager?.findFragmentByTag("registry") == null)
+                getTransaction()?.add(R.id.main_content, LoginFragment.instance, "login")?.commit()
+            else
+                getTransaction()?.replace(R.id.main_content, LoginFragment.instance, "login")?.commit()
+        }
+    }
+
+    override fun showConversation() {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        RongIM.getInstance().startConversationList(mActivity!!.applicationContext)
     }
 
     private fun checkMainContent():Boolean {
@@ -43,4 +60,7 @@ class DemoDisplay(): IMainDisplay {
         view ?: return false
         return true
     }
+
+    private fun getTransaction() : FragmentTransaction? = mActivity?.supportFragmentManager?.
+            beginTransaction()
 }

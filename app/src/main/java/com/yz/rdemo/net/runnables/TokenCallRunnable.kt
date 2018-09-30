@@ -16,10 +16,8 @@ class TokenCallRunnable(userId: String, name:String, portraitUri: String): Netwo
     }
 
     override fun onSuccess(result: TokenModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onError(e: Throwable?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

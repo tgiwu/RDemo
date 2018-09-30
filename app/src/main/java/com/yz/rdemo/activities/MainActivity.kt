@@ -6,7 +6,6 @@ import com.yz.rdemo.controllers.MainController
 import com.yz.rdemo.display.DemoDisplay
 import com.yz.rdemo.display.IMainDisplay
 import io.rong.imkit.RongIM
-import io.rong.imlib.RongIMClient
 
 class MainActivity : BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>() {
 
@@ -18,9 +17,14 @@ class MainActivity : BaseActivity<IMainController<IMainController.IMainUi>, IMai
         super.onCreate(savedInstanceState)
     }
 
+    fun showConversationList() {
+        RongIM.getInstance().startConversationList(this)
+        finish()
+    }
+
     override fun onStart() {
         super.onStart()
-        getDisplay()?.showRegistry()
+        getDisplay()?.showLogin()
     }
 
     override fun onPause() {
