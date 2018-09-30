@@ -1,6 +1,6 @@
 package com.yz.rdemo.net.model
 
-data class RegistryModel(val code:Int, val result: RegistryResultEntity) {
+data class RegistryModel(val code:Int, val result: RegistryResultEntity?) {
     override fun toString(): String {
         return "RegistryModel(code=$code, result=$result)"
     }

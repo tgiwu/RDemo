@@ -1,14 +1,18 @@
 package com.yz.rdemo.controllers
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.yz.rdemo.Constants.REQUEST_LOGIN_DO
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_CODE
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_DO
-import com.yz.rdemo.net.model.LoginInfo
-import com.yz.rdemo.net.model.LoginResultEntity
+import com.yz.rdemo.Constants.REQUEST_REGISTRY_VERIFY_CODE
+import com.yz.rdemo.activities.MainActivity
+import com.yz.rdemo.net.model.*
 import com.yz.rdemo.net.runnables.LoginCallRunnable
 import com.yz.rdemo.net.runnables.RegistryCallRunnable
 import com.yz.rdemo.net.runnables.SendCodeCallRunnable
+import com.yz.rdemo.net.runnables.VerifyCodeCallRunnable
 import com.yz.rdemo.utils.MyExecutor
 import com.yz.rdemo.utils.MySPManager
 import io.rong.imkit.RongIM
@@ -20,7 +24,7 @@ class MainController : IMainController<IMainController.IMainUi> {
         val instance: MainController by lazy { MainController() }
     }
 
-    var mActivity: AppCompatActivity? = null
+    private var mActivity: AppCompatActivity? = null
 
     override fun attach(activity: AppCompatActivity) {
         mActivity = activity
@@ -35,31 +39,43 @@ class MainController : IMainController<IMainController.IMainUi> {
     }
 
     override fun doRegistry(nickname: String, password: String, verification_token: String, phone: String) {
+        Log.i("zhy", "doRegistry $nickname  $password, $verification_token, $phone")
         MyExecutor.execute(RegistryCallRunnable(nickname, password, verification_token, phone))
     }
 
     override fun doLogin(region: String, phone: String, password: String) {
+        Log.i("zhy", "doLogin $region, $phone, $password")
         MyExecutor.execute(LoginCallRunnable(region, phone, password))
     }
 
-    override fun tryToConnectServer(activity: com.yz.rdemo.activities.MainActivity) {
+    override fun doVerifyCode(region:String, nickname: String, password: String, code: String, phone: String) {
+        Log.i("zhy", "doVerifyCode $region $nickname $password $code $phone")
+        MyExecutor.execute(VerifyCodeCallRunnable(region,phone, code,nickname, password))
+    }
+
+    override fun tryToConnectServer(context: Context) {
         val token = MySPManager.getDefaultSPForQuery().getString("rong_token", "")
+        Log.i("zhy", "tryToConnectServer $token")
         RongIM.connect(token, object : RongIMClient.ConnectCallback(){
             override fun onSuccess(p0: String?) {
-                activity.showConversationList()
+                Log.i("zhy", "tryToConnectServer, onSuccess")
+                RongIM.getInstance().startConversationList(context)
+                (context as? MainActivity)?.finish()
             }
 
             override fun onError(p0: RongIMClient.ErrorCode?) {
+                Log.i("zhy", "tryToConnectServer, onError")
             }
 
             override fun onTokenIncorrect() {
+                Log.i("zhy", "tryToConnectServer, onTokenIncorrect")
+
             }
-
         })
-
     }
 
     override fun onRequestSuccess(requestCode: Int, data: Any?) {
+        Log.i("zhy", "is mActivity null ${hashCode()}")
         mActivity?: return
         when(requestCode) {
             REQUEST_REGISTRY_CODE ->
@@ -78,10 +94,22 @@ class MainController : IMainController<IMainController.IMainUi> {
                 }
             }
             REQUEST_LOGIN_DO -> {
+                Log.i("zhy", "REQUEST_LOGIN_DO")
                 saveUserData(requestCode, data)
+                mActivity?.let {
+                    tryToConnectServer(it)
+                }
                 mActivity?.supportFragmentManager?.findFragmentByTag("login")?.let {
                     if (!it.isDetached)
-                        (it as IMainController.ILoginUi).onLoginSuccess(data as LoginInfo)
+                        (it as IMainController.ILoginUi).onLoginSuccess()
+                }
+            }
+            REQUEST_REGISTRY_VERIFY_CODE -> {
+                Log.i("zhy", "REQUEST_REGISTRY_VERIFY_CODE")
+               val info = data as HashMap<String, String>
+                Log.i("zhy", "map $info['nickname''], info['password''], $info['verification_token''], $info['phone']")
+                info.let {
+                    doRegistry(it["nickname"]!!, it["password"]!!, it["verification_token"]!!, it["phone"]!!)
                 }
             }
         }
@@ -98,7 +126,8 @@ class MainController : IMainController<IMainController.IMainUi> {
                         (it as IMainController.IRegistryUi).onError(requestCode, message)
                     }
                 }
-            REQUEST_REGISTRY_DO -> {
+            REQUEST_REGISTRY_DO,
+            REQUEST_REGISTRY_VERIFY_CODE -> {
                 mActivity?.supportFragmentManager?.findFragmentByTag("registry")?.let {
                     if (!it.isDetached)
                         (it as IMainController.IRegistryUi).onError(requestCode, message)
@@ -110,6 +139,7 @@ class MainController : IMainController<IMainController.IMainUi> {
                         (it as IMainController.ILoginUi).onError(requestCode, message)
                 }
             }
+
         }
     }
 

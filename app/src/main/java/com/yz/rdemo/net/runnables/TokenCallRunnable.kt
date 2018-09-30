@@ -18,6 +18,6 @@ class TokenCallRunnable(userId: String, name:String, portraitUri: String): Netwo
     override fun onSuccess(result: TokenModel) {
     }
 
-    override fun onError(e: Throwable?) {
+    override fun onError(e: Throwable?, message: String?, code:Int) {
     }
 }

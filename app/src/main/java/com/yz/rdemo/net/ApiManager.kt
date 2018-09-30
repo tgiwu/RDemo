@@ -1,11 +1,9 @@
 package com.yz.rdemo.net
 
+import android.util.Log
 import com.google.common.base.Preconditions
 import com.google.gson.Gson
-import com.yz.rdemo.net.model.LoginModel
-import com.yz.rdemo.net.model.RegistryModel
-import com.yz.rdemo.net.model.SimpleModel
-import com.yz.rdemo.net.model.TokenModel
+import com.yz.rdemo.net.model.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -42,10 +40,11 @@ object ApiManager{
     fun registry(nickname: String, password:String, verification_token: String): Observable<RegistryModel> {
         Preconditions.checkNotNull(service, NullPointerException("service is null !" ))
         val param = HashMap<String, String>()
-        param["nickname"] = nickname
-        param["password"] = password
-        param["verification_token"] = verification_token
+        param["nickname"] = nickname.trim()
+        param["password"] = password.trim()
+        param["verification_token"] = verification_token.trim()
         val json = mGson.toJson(param)
+        Log.i("zhy", " registry json $json")
         return service!!.registry(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
     }
 
@@ -57,5 +56,16 @@ object ApiManager{
         param["password"] = password
         val json = mGson.toJson(param)
         return  service!!.login(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
+    }
+
+    fun verifyCode( region:String,  phone:String,  code:String) :Observable<VerifyCodeModel> {
+        Preconditions.checkNotNull(service, NullPointerException("service is null!"))
+        val param = HashMap<String, String>()
+        param["region"] = region
+        param["phone"] = phone
+        param["code"] = code
+        val json = mGson.toJson(param)
+        Log.i("zhy", "verifyCode $json")
+        return service!!.verifycode(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
     }
 }

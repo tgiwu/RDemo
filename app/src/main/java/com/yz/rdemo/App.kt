@@ -2,6 +2,8 @@ package com.yz.rdemo
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.yz.rdemo.net.ApiService
 import com.yz.rdemo.net.HttpClient
 import com.yz.rdemo.utils.MySPManager

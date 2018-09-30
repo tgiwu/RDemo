@@ -5,6 +5,7 @@ object Constants {
 
     const val  REQUEST_REGISTRY_CODE =  0
     const val REQUEST_REGISTRY_DO = 1
+    const val REQUEST_REGISTRY_VERIFY_CODE = 2
 
     const val REQUEST_LOGIN_DO = 10
 }

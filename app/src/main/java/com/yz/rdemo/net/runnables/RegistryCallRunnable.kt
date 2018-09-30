@@ -28,7 +28,7 @@ class RegistryCallRunnable(nickname: String, password:String, verification_token
             MainController.instance.onRequestError(Constants.REQUEST_REGISTRY_DO, result.toString())
     }
 
-    override fun onError(e: Throwable?) {
-        MainController.instance.onRequestError(Constants.REQUEST_REGISTRY_DO, e?.message)
+    override fun onError(e: Throwable?, message:String?, code:Int) {
+        MainController.instance.onRequestError(Constants.REQUEST_REGISTRY_DO, message)
     }
 }

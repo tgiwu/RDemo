@@ -1,6 +1,6 @@
 package com.yz.rdemo.net.model
 
-data class LoginModel(val code: Int, val result: LoginResultEntity){
+data class LoginModel(val code: Int, val result: LoginResultEntity?){
     override fun toString(): String {
         return "LoginModel(code=$code, result=$result)"
     }

@@ -3,8 +3,10 @@ package com.yz.rdemo.utils
 import android.os.Handler
 import android.os.Looper
 import android.os.Process
+import android.util.Log
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import retrofit2.HttpException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -35,8 +37,13 @@ object MyExecutor : BackgroundExecutor {
                 }
 
                 override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    mBackgroundRunnable.onError(e)
+                    Log.e("zhy", "on error ${e.message}")
+                    if (e is HttpException) {
+                        Log.e("zhy", "error ${e.response().errorBody()?.string()} code ${e.response().code()}")
+                        mBackgroundRunnable.onError(e, e.response().errorBody()?.string(), e.response().code())
+                    } else {
+                        mBackgroundRunnable.onError(e,null, -1)
+                    }
                 }
 
                 override fun onComplete() {

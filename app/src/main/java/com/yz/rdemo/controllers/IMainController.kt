@@ -1,5 +1,6 @@
 package com.yz.rdemo.controllers
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import com.yz.rdemo.activities.MainActivity
 import com.yz.rdemo.net.model.LoginInfo
@@ -12,11 +13,13 @@ interface IMainController<U : IMainController.IMainUi>: IController {
 
     fun doLogin(region: String, phone: String, password: String)
 
+    fun doVerifyCode(region:String, nickname: String, password: String, code: String, phone: String)
+
     fun onRequestSuccess(requestCode: Int, data: Any?)
 
     fun onRequestError(requestCode: Int, message: String?)
 
-    fun tryToConnectServer(activity: MainActivity)
+    fun tryToConnectServer(context: Context)
 
     interface IMainUi
 
@@ -28,7 +31,7 @@ interface IMainController<U : IMainController.IMainUi>: IController {
     }
 
     interface ILoginUi :IMainUi{
-        fun onLoginSuccess(loginInfo: LoginInfo)
+        fun onLoginSuccess()
         fun onError(requestCode: Int, message: String?)
     }
 }

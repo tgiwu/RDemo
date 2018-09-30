@@ -41,7 +41,7 @@ class RegistryFragment : Fragment(), IMainController.IRegistryUi, View.OnClickLi
             }
             R.id.registryBtn -> {
                 if (checkInput())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doRegistry(registryNickname.text.toString(),
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doVerifyCode("86", registryNickname.text.toString(),
                             registryPassword.text.toString(), registryCode.text.toString(), registryPhone.text.toString())
             }
             else -> {
@@ -69,7 +69,7 @@ class RegistryFragment : Fragment(), IMainController.IRegistryUi, View.OnClickLi
 
     override fun onRequestCodeSend() {
         Log.i("zhy", "code has sent")
-        Toast.makeText(activity, R.string.registry_code_has_send, Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity, R.string.registry_code_has_send, Toast.LENGTH_LONG).show()
     }
 
     override fun onRequestSend() {
@@ -79,6 +79,8 @@ class RegistryFragment : Fragment(), IMainController.IRegistryUi, View.OnClickLi
     }
 
     override fun onError(requestCode: Int, message: String?) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        message?.let {
+            (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showErrorToast(it)
+        }
     }
 }

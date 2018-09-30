@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.yz.rdemo.R
 import com.yz.rdemo.activities.BaseActivity
+import com.yz.rdemo.activities.MainActivity
 import com.yz.rdemo.controllers.IMainController
 import com.yz.rdemo.display.IMainDisplay
 import com.yz.rdemo.net.model.LoginInfo
@@ -55,8 +56,7 @@ class LoginFragment: Fragment(), IMainController.ILoginUi, View.OnClickListener 
         return true
     }
 
-    override fun onLoginSuccess(loginInfo: LoginInfo) {
-        (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.tryToConnectServer()
+    override fun onLoginSuccess() {
     }
 
     override fun onError(requestCode: Int, message: String?) {

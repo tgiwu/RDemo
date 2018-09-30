@@ -1,9 +1,6 @@
 package com.yz.rdemo.net
 
-import com.yz.rdemo.net.model.LoginModel
-import com.yz.rdemo.net.model.RegistryModel
-import com.yz.rdemo.net.model.SimpleModel
-import com.yz.rdemo.net.model.TokenModel
+import com.yz.rdemo.net.model.*
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -25,4 +22,7 @@ interface ApiService {
 
     @POST("user/login")
     fun login(@Body request: RequestBody):Observable<LoginModel>
+
+    @POST("user/verify_code")
+    fun verifycode(@Body request: RequestBody) : Observable<VerifyCodeModel>
 }

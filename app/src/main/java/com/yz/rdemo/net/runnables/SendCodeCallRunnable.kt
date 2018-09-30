@@ -25,7 +25,7 @@ class SendCodeCallRunnable(region:String, phone:String): NetworkCallRunnable<Sim
             MainController.instance.onRequestError(Constants.REQUEST_REGISTRY_CODE, result.toString())
     }
 
-    override fun onError(e: Throwable?) {
+    override fun onError(e: Throwable?, message:String?, code:Int) {
         MainController.instance.onRequestError(Constants.REQUEST_REGISTRY_CODE, e?.message)
     }
 }

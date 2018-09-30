@@ -17,11 +17,6 @@ class MainActivity : BaseActivity<IMainController<IMainController.IMainUi>, IMai
         super.onCreate(savedInstanceState)
     }
 
-    fun showConversationList() {
-        RongIM.getInstance().startConversationList(this)
-        finish()
-    }
-
     override fun onStart() {
         super.onStart()
         getDisplay()?.showLogin()

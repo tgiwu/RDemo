@@ -12,7 +12,7 @@
     <string name="registry_code_empty" tools:ignore="MissingTranslation">Verification code can not be empty</string>
 
     <string name="login_btn" tools:ignore="MissingTranslation">Login</string>
-    <string name="login_go_to_registry" tools:ignore="MissingTranslation">registry now</string>
+    <string name="login_go_to_registry" tools:ignore="MissingTranslation">Registry now</string>
     <string name="login_phone_empty" tools:ignore="MissingTranslation">Phone can not be empty !</string>
     <string name="login_password_empty" tools:ignore="MissingTranslation">Password can not be empty !</string>
 </resources>

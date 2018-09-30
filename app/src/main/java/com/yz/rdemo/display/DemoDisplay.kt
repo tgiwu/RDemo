@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.google.common.base.Preconditions
 import com.yz.rdemo.R
 import com.yz.rdemo.fragments.LoginFragment
@@ -52,6 +53,18 @@ class DemoDisplay(): IMainDisplay {
     override fun showConversation() {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
         RongIM.getInstance().startConversationList(mActivity!!.applicationContext)
+    }
+
+    override fun showErrorToast(message: String) {
+        mActivity?.let {
+            it.runOnUiThread { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
+        }
+    }
+
+    override fun showErrorToast(message: Int) {
+        mActivity?.let {
+            it.runOnUiThread{ Toast.makeText(it, message, Toast.LENGTH_SHORT).show()}
+        }
     }
 
     private fun checkMainContent():Boolean {

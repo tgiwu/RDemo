@@ -27,7 +27,7 @@ class LoginCallRunnable(region: String, phone: String, password:String): Network
         }
     }
 
-    override fun onError(e: Throwable?) {
+    override fun onError(e: Throwable?, message:String?, code:Int) {
         Log.i("zhy","login error $e")
         MainController.instance.onRequestError(Constants.REQUEST_LOGIN_DO, e?.message)
     }
