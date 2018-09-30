@@ -11,39 +11,32 @@ abstract class BaseActivity<C : IController, D : IDisplay>: AppCompatActivity() 
 
     private var mController: C? = null
     private var mDisplay: D? = null
+    private var isFirstAttach = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mController = provideController()
         mDisplay = provideDisplay()
+        isFirstAttach = true
         setContentView(R.layout.activity_main)
     }
 
     abstract fun provideController() : C
     abstract fun provideDisplay(): D
+    abstract fun onFirstAttach()
 
     fun getController(): C? = mController
     fun getDisplay(): D? = mDisplay
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("zhy", " onRestart")
-        mController?.attach(this)
-        mDisplay?.attach(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("zhy", "onStart")
-        mController?.attach(this)
-        mDisplay?.attach(this)
-    }
 
     override fun onResume() {
         super.onResume()
         Log.i("zhy", "onResume")
         mController?.attach(this)
         mDisplay?.attach(this)
+        if (isFirstAttach) {
+            onFirstAttach()
+            isFirstAttach = false
+        }
     }
 
     override fun onPause() {

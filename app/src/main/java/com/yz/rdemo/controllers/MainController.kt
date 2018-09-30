@@ -26,6 +26,8 @@ class MainController : IMainController<IMainController.IMainUi> {
 
     private var mActivity: AppCompatActivity? = null
 
+    override fun isAttached(): Boolean = null != mActivity
+
     override fun attach(activity: AppCompatActivity) {
         mActivity = activity
     }

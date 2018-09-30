@@ -22,6 +22,8 @@ class DemoDisplay(): IMainDisplay {
         attach(activity)
     }
 
+    override fun isAttached(): Boolean = null != mActivity
+
     override fun attach(activity: AppCompatActivity) {
         mActivity = activity
     }

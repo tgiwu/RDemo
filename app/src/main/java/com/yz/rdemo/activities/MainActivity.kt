@@ -1,11 +1,9 @@
 package com.yz.rdemo.activities
 
-import android.os.Bundle
 import com.yz.rdemo.controllers.IMainController
 import com.yz.rdemo.controllers.MainController
 import com.yz.rdemo.display.DemoDisplay
 import com.yz.rdemo.display.IMainDisplay
-import io.rong.imkit.RongIM
 
 class MainActivity : BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>() {
 
@@ -13,16 +11,7 @@ class MainActivity : BaseActivity<IMainController<IMainController.IMainUi>, IMai
 
     override fun provideDisplay(): IMainDisplay = DemoDisplay()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onStart() {
-        super.onStart()
+    override fun onFirstAttach() {
         getDisplay()?.showLogin()
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 }
