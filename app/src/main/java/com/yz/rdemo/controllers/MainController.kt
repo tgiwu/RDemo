@@ -55,23 +55,20 @@ class MainController : IMainController<IMainController.IMainUi> {
         MyExecutor.execute(VerifyCodeCallRunnable(region,phone, code,nickname, password))
     }
 
-    override fun tryToConnectServer(context: Context) {
-        val token = MySPManager.getDefaultSPForQuery().getString("rong_token", "")
-        Log.i("zhy", "tryToConnectServer $token")
-        RongIM.connect(token, object : RongIMClient.ConnectCallback(){
+    override fun tryToConnectServer(token: String) {
+//        RongIM.connect(token, object :RongIMClient.ConnectCallback() {
+        RongIM.connect("tfszbUwsVR0pUKY+C/9MSUIdOyN2FeZF7pxEYpISa65javqzboyVA8iud/DpFNyPc+sj++9TO5tFbTkOzN+BSwQi7sWd57Ka", object :RongIMClient.ConnectCallback() {
             override fun onSuccess(p0: String?) {
-                Log.i("zhy", "tryToConnectServer, onSuccess")
-                RongIM.getInstance().startConversationList(context)
-                (context as? MainActivity)?.finish()
+                Log.i("zhy", "onSuccess $p0")
+                (mActivity as MainActivity).getDisplay()?.showConversation()
             }
 
             override fun onError(p0: RongIMClient.ErrorCode?) {
-                Log.i("zhy", "tryToConnectServer, onError")
+                Log.i("zhy", "onError $p0")
             }
 
             override fun onTokenIncorrect() {
-                Log.i("zhy", "tryToConnectServer, onTokenIncorrect")
-
+                Log.i("zhy", "onTokenIncorrect $token")
             }
         })
     }
@@ -99,7 +96,7 @@ class MainController : IMainController<IMainController.IMainUi> {
                 Log.i("zhy", "REQUEST_LOGIN_DO")
                 saveUserData(requestCode, data)
                 mActivity?.let {
-                    tryToConnectServer(it)
+                    tryToConnectServer((data as LoginResultEntity).token)
                 }
                 mActivity?.supportFragmentManager?.findFragmentByTag("login")?.let {
                     if (!it.isDetached)

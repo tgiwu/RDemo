@@ -34,8 +34,9 @@ class LoginFragment: Fragment(), IMainController.ILoginUi, View.OnClickListener 
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.loginBtn -> {
-                if (checkInput())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doLogin("86", loginPhone.text.toString(), loginPass.text.toString())
+//                if (checkInput())
+//                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doLogin("86", loginPhone.text.toString(), loginPass.text.toString())
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.tryToConnectServer("")
             }
             R.id.goToRegistry -> {
                 (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showRegistry()

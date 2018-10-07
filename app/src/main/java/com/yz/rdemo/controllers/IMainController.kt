@@ -19,7 +19,7 @@ interface IMainController<U : IMainController.IMainUi>: IController {
 
     fun onRequestError(requestCode: Int, message: String?)
 
-    fun tryToConnectServer(context: Context)
+    fun tryToConnectServer(token: String)
 
     interface IMainUi
 

@@ -4,10 +4,13 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.multidex.MultiDex
+import android.util.Log
 import com.yz.rdemo.net.ApiService
 import com.yz.rdemo.net.HttpClient
 import com.yz.rdemo.utils.MySPManager
 import io.rong.imkit.RongIM
+import io.rong.imlib.RongIMClient
 import io.rong.imlib.ipc.RongExceptionHandler
 
 class App: Application() {
@@ -24,5 +27,6 @@ class App: Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }

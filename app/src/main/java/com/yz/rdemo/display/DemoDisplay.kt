@@ -11,6 +11,7 @@ import com.yz.rdemo.fragments.LoginFragment
 import com.yz.rdemo.fragments.RegistryFragment
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+import io.rong.push.RongPushClient
 import kotlinx.android.synthetic.main.activity_main.view.*
 
 @SuppressLint("StaticFieldLeak")
@@ -54,7 +55,13 @@ class DemoDisplay(): IMainDisplay {
 
     override fun showConversation() {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
-        RongIM.getInstance().startConversationList(mActivity!!.applicationContext)
+        val map = HashMap<String, Boolean> ()
+        map[RongPushClient.ConversationType.PRIVATE.name] = false
+        map[RongPushClient.ConversationType.CHATROOM.name] = false
+        map[RongPushClient.ConversationType.GROUP.name] = false
+        RongIM.getInstance().startConversationList(mActivity!!.applicationContext, map)
+//        RongIM.getInstance().startChatRoomChat(mActivity!!, "add", true)
+//        RongIM.getInstance().startGroupChat(mActivity, "1234567", "title")
     }
 
     override fun showErrorToast(message: String) {
