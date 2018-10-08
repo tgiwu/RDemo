@@ -3,6 +3,7 @@ package com.yz.rdemo.display
 import android.annotation.SuppressLint
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.common.base.Preconditions
@@ -55,11 +56,20 @@ class DemoDisplay(): IMainDisplay {
 
     override fun showConversation() {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
-        val map = HashMap<String, Boolean> ()
-        map[RongPushClient.ConversationType.PRIVATE.name] = false
-        map[RongPushClient.ConversationType.CHATROOM.name] = false
-        map[RongPushClient.ConversationType.GROUP.name] = false
-        RongIM.getInstance().startConversationList(mActivity!!.applicationContext, map)
+//        val map = HashMap<String, Boolean> ()
+//        map[RongPushClient.ConversationType.PRIVATE.name] = true
+//        map[RongPushClient.ConversationType.CHATROOM.name] = true
+//        map[RongPushClient.ConversationType.GROUP.name] = true
+//        RongIM.getInstance().startConversationList(mActivity!!.applicationContext, map)
+        RongIM.getInstance().createDiscussionChat(mActivity, listOf("1", "2", "3"), "discussion", object : RongIMClient.CreateDiscussionCallback() {
+            override fun onSuccess(p0: String?) {
+                Log.i("zhy", "create success $p0")
+            }
+
+            override fun onError(p0: RongIMClient.ErrorCode?) {
+                Log.i("zhy", "create error $p0")
+            }
+        })
 //        RongIM.getInstance().startChatRoomChat(mActivity!!, "add", true)
 //        RongIM.getInstance().startGroupChat(mActivity, "1234567", "title")
     }

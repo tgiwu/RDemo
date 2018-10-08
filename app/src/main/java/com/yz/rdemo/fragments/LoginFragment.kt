@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.yz.rdemo.Constants.MY_TOKEN
 import com.yz.rdemo.R
 import com.yz.rdemo.activities.BaseActivity
 import com.yz.rdemo.activities.MainActivity
@@ -36,7 +37,7 @@ class LoginFragment: Fragment(), IMainController.ILoginUi, View.OnClickListener 
             R.id.loginBtn -> {
 //                if (checkInput())
 //                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doLogin("86", loginPhone.text.toString(), loginPass.text.toString())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.tryToConnectServer("")
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.tryToConnectServer(MY_TOKEN)
             }
             R.id.goToRegistry -> {
                 (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showRegistry()

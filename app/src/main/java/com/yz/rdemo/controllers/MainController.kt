@@ -1,6 +1,5 @@
 package com.yz.rdemo.controllers
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.yz.rdemo.Constants.REQUEST_LOGIN_DO
@@ -56,8 +55,8 @@ class MainController : IMainController<IMainController.IMainUi> {
     }
 
     override fun tryToConnectServer(token: String) {
-//        RongIM.connect(token, object :RongIMClient.ConnectCallback() {
-        RongIM.connect("tfszbUwsVR0pUKY+C/9MSUIdOyN2FeZF7pxEYpISa65javqzboyVA8iud/DpFNyPc+sj++9TO5tFbTkOzN+BSwQi7sWd57Ka", object :RongIMClient.ConnectCallback() {
+        Log.i("zhy", "try to connect server $token")
+        RongIM.connect(token, object :RongIMClient.ConnectCallback() {
             override fun onSuccess(p0: String?) {
                 Log.i("zhy", "onSuccess $p0")
                 (mActivity as MainActivity).getDisplay()?.showConversation()
@@ -95,6 +94,7 @@ class MainController : IMainController<IMainController.IMainUi> {
             REQUEST_LOGIN_DO -> {
                 Log.i("zhy", "REQUEST_LOGIN_DO")
                 saveUserData(requestCode, data)
+                Log.i("zhy", "is mActivity null ${null == mActivity}")
                 mActivity?.let {
                     tryToConnectServer((data as LoginResultEntity).token)
                 }
@@ -145,7 +145,7 @@ class MainController : IMainController<IMainController.IMainUi> {
     private fun saveUserData(requestCode: Int, data: Any?) {
         when(requestCode) {
             REQUEST_LOGIN_DO -> {
-                MySPManager.getDefaultEditor().putString("rong_token", (data as LoginResultEntity).token).apply()
+                MySPManager.getDefaultEditor().putString("my_token", (data as LoginResultEntity).token).putString("my_id", data.id).apply()
             }
         }
     }
