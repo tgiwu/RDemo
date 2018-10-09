@@ -12,6 +12,8 @@ import com.yz.rdemo.utils.MySPManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
 import io.rong.imlib.ipc.RongExceptionHandler
+import io.rong.imlib.model.Group
+import io.rong.imlib.model.UserInfo
 
 class App: Application() {
     override fun onCreate() {
@@ -22,6 +24,10 @@ class App: Application() {
 
         MySPManager.init(this)
         HttpClient.getInstance(this)
+
+        RongIM.setUserInfoProvider({ id -> UserInfo(id, id, Uri.parse(Constants.PORTRAIT)) }, true)
+
+        RongIM.setGroupInfoProvider({ id -> Group(id, id, Uri.parse(Constants.PORTRAIT)) }, true)
 
     }
 

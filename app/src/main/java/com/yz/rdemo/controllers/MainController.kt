@@ -1,12 +1,17 @@
 package com.yz.rdemo.controllers
 
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.yz.rdemo.Constants
 import com.yz.rdemo.Constants.REQUEST_LOGIN_DO
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_CODE
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_DO
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_VERIFY_CODE
+import com.yz.rdemo.activities.BaseActivity
 import com.yz.rdemo.activities.MainActivity
+import com.yz.rdemo.display.IDisplay
+import com.yz.rdemo.display.IMainDisplay
 import com.yz.rdemo.net.model.*
 import com.yz.rdemo.net.runnables.LoginCallRunnable
 import com.yz.rdemo.net.runnables.RegistryCallRunnable
@@ -16,23 +21,31 @@ import com.yz.rdemo.utils.MyExecutor
 import com.yz.rdemo.utils.MySPManager
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.UserInfo
 
-class MainController : IMainController<IMainController.IMainUi> {
+class MainController<U: IMainController.IMainUi, D: IMainDisplay> : IMainController<IMainController.IMainUi, IMainDisplay> {
 
     companion object {
-        val instance: MainController by lazy { MainController() }
+        val instance: MainController<IMainController.IMainUi, IMainDisplay> by lazy { MainController<IMainController.IMainUi, IMainDisplay>() }
     }
 
-    private var mActivity: AppCompatActivity? = null
+    private var mActivity: BaseActivity<IMainController<U, D>, D>? = null
+    private var mDisplay: IMainDisplay? = null
 
     override fun isAttached(): Boolean = null != mActivity
 
     override fun attach(activity: AppCompatActivity) {
-        mActivity = activity
+        mActivity = activity as BaseActivity<IMainController<U, D>, D>
+        mDisplay = mActivity?.getDisplay()
+    }
+
+    override fun setDisplay(display: IDisplay) {
+        mDisplay = display as IMainDisplay
     }
 
     override fun detach() {
         mActivity = null
+        mDisplay = null
     }
 
     override fun doRequestCode(region: String, phone: String) {
@@ -59,7 +72,9 @@ class MainController : IMainController<IMainController.IMainUi> {
         RongIM.connect(token, object :RongIMClient.ConnectCallback() {
             override fun onSuccess(p0: String?) {
                 Log.i("zhy", "onSuccess $p0")
-                (mActivity as MainActivity).getDisplay()?.showConversation()
+                RongIM.getInstance().setCurrentUserInfo(UserInfo(p0, "zzz", Uri.parse(Constants.PORTRAIT)))
+                RongIM.getInstance().setMessageAttachedUserInfo(true)
+                (mActivity as MainActivity).getDisplay()?.showOperationList()
             }
 
             override fun onError(p0: RongIMClient.ErrorCode?) {

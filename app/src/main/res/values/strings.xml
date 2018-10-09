@@ -15,4 +15,13 @@
     <string name="login_go_to_registry" tools:ignore="MissingTranslation">Registry now</string>
     <string name="login_phone_empty" tools:ignore="MissingTranslation">Phone can not be empty !</string>
     <string name="login_password_empty" tools:ignore="MissingTranslation">Password can not be empty !</string>
+    <string name="title_activity_conver_list">ConverListActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">test chat</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="operation_test_chat_by_drawer">Click drawer menu item to test chat</string>
 </resources>

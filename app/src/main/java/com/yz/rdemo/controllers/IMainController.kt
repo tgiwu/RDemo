@@ -1,11 +1,8 @@
 package com.yz.rdemo.controllers
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
-import com.yz.rdemo.activities.MainActivity
-import com.yz.rdemo.net.model.LoginInfo
+import com.yz.rdemo.display.IMainDisplay
 
-interface IMainController<U : IMainController.IMainUi>: IController {
+interface IMainController<U : IMainController.IMainUi, D: IMainDisplay>: IController {
 
     fun doRequestCode(region:String, phone: String)
 

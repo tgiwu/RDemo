@@ -37,10 +37,10 @@ class LoginFragment: Fragment(), IMainController.ILoginUi, View.OnClickListener 
             R.id.loginBtn -> {
 //                if (checkInput())
 //                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doLogin("86", loginPhone.text.toString(), loginPass.text.toString())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.tryToConnectServer(MY_TOKEN)
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getController()?.tryToConnectServer(MY_TOKEN)
             }
             R.id.goToRegistry -> {
-                (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showRegistry()
+                (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getDisplay()?.showRegistry()
             }
             else->{}
         }

@@ -34,14 +34,14 @@ class RegistryFragment : Fragment(), IMainController.IRegistryUi, View.OnClickLi
         when (v?.id) {
             R.id.registryRequestCodeBtn -> {
                 if (registryPhone.text.isNotBlank())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doRequestCode("86", registryPhone.text.toString())
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getController()?.doRequestCode("86", registryPhone.text.toString())
             }
             R.id.goToLogin -> {
-                (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showLogin()
+                (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getDisplay()?.showLogin()
             }
             R.id.registryBtn -> {
                 if (checkInput())
-                    (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getController()?.doVerifyCode("86", registryNickname.text.toString(),
+                    (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getController()?.doVerifyCode("86", registryNickname.text.toString(),
                             registryPassword.text.toString(), registryCode.text.toString(), registryPhone.text.toString())
             }
             else -> {
@@ -80,7 +80,7 @@ class RegistryFragment : Fragment(), IMainController.IRegistryUi, View.OnClickLi
 
     override fun onError(requestCode: Int, message: String?) {
         message?.let {
-            (activity as BaseActivity<IMainController<IMainController.IMainUi>, IMainDisplay>).getDisplay()?.showErrorToast(it)
+            (activity as BaseActivity<IMainController<IMainController.IMainUi, IMainDisplay>, IMainDisplay>).getDisplay()?.showErrorToast(it)
         }
     }
 }

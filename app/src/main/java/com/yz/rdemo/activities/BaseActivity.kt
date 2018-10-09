@@ -17,10 +17,12 @@ abstract class BaseActivity<C : IController, D : IDisplay>: AppCompatActivity() 
         super.onCreate(savedInstanceState)
         mController = provideController()
         mDisplay = provideDisplay()
+        mDisplay?.let {  mController?.setDisplay(mDisplay!!) }
         isFirstAttach = true
-        setContentView(R.layout.activity_main)
+        setContentView(getLayout())
     }
 
+    abstract fun getLayout() : Int
     abstract fun provideController() : C
     abstract fun provideDisplay(): D
     abstract fun onFirstAttach()

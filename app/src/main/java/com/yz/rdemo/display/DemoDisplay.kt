@@ -1,6 +1,7 @@
 package com.yz.rdemo.display
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -8,15 +9,17 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.common.base.Preconditions
 import com.yz.rdemo.R
+import com.yz.rdemo.activities.OperationListActivity
 import com.yz.rdemo.fragments.LoginFragment
+import com.yz.rdemo.fragments.OperationListFragment
 import com.yz.rdemo.fragments.RegistryFragment
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
+import io.rong.imlib.model.Conversation
 import io.rong.push.RongPushClient
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 @SuppressLint("StaticFieldLeak")
-class DemoDisplay(): IMainDisplay {
+class DemoDisplay(): IMainDisplay, IOperationDisplay {
 
     private var mActivity: AppCompatActivity? = null
 
@@ -54,24 +57,30 @@ class DemoDisplay(): IMainDisplay {
         }
     }
 
-    override fun showConversation() {
+    override fun showConversationList() {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
-//        val map = HashMap<String, Boolean> ()
-//        map[RongPushClient.ConversationType.PRIVATE.name] = true
-//        map[RongPushClient.ConversationType.CHATROOM.name] = true
-//        map[RongPushClient.ConversationType.GROUP.name] = true
-//        RongIM.getInstance().startConversationList(mActivity!!.applicationContext, map)
-        RongIM.getInstance().createDiscussionChat(mActivity, listOf("1", "2", "3"), "discussion", object : RongIMClient.CreateDiscussionCallback() {
-            override fun onSuccess(p0: String?) {
-                Log.i("zhy", "create success $p0")
-            }
+        val map = HashMap<String, Boolean> ()
+        map[RongPushClient.ConversationType.PRIVATE.name] = true
+        map[RongPushClient.ConversationType.CHATROOM.name] = true
+        map[RongPushClient.ConversationType.GROUP.name] = true
+        map[RongPushClient.ConversationType.DISCUSSION.name] = true
+        RongIM.getInstance().startConversationList(mActivity!!.applicationContext, map)
+        mActivity?.finish()
+    }
 
-            override fun onError(p0: RongIMClient.ErrorCode?) {
-                Log.i("zhy", "create error $p0")
-            }
-        })
-//        RongIM.getInstance().startChatRoomChat(mActivity!!, "add", true)
-//        RongIM.getInstance().startGroupChat(mActivity, "1234567", "title")
+    override fun showOperationList() {
+        mActivity?.startActivity(Intent(mActivity!!.applicationContext, OperationListActivity::class.java))
+        mActivity?.finish()
+    }
+
+    override fun showOperationListFragment() {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        if (checkMainContent()) {
+            if (mActivity!!.supportFragmentManager?.findFragmentByTag("operation") == null)
+                getTransaction()?.add(R.id.main_content, OperationListFragment.instance, "operation")?.commit()
+            else
+                getTransaction()?.replace(R.id.main_content, OperationListFragment.instance, "operation")?.commit()
+        }
     }
 
     override fun showErrorToast(message: String) {
@@ -84,6 +93,34 @@ class DemoDisplay(): IMainDisplay {
         mActivity?.let {
             it.runOnUiThread{ Toast.makeText(it, message, Toast.LENGTH_SHORT).show()}
         }
+    }
+
+    override fun showPrivateChat(targetId: String) {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        RongIM.getInstance().startConversation(mActivity, Conversation.ConversationType.PRIVATE, "idid", "idid")
+    }
+
+    override fun showDiscussionChat(ids: List<String>, title: String) {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        RongIM.getInstance().createDiscussionChat(mActivity, listOf("1", "2", "3"), "discussion", object : RongIMClient.CreateDiscussionCallback() {
+            override fun onSuccess(p0: String?) {
+                Log.i("zhy", "create success $p0")
+            }
+
+            override fun onError(p0: RongIMClient.ErrorCode?) {
+                Log.i("zhy", "create error $p0")
+            }
+        })
+    }
+
+    override fun showRomeChat(chatRomeId:String) {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        RongIM.getInstance().startChatRoomChat(mActivity!!, chatRomeId, true)
+    }
+
+    override fun showGroupChat(groupId: String, title: String) {
+        Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
+        RongIM.getInstance().startGroupChat(mActivity, groupId, title)
     }
 
     private fun checkMainContent():Boolean {
