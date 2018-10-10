@@ -15,4 +15,15 @@ object Constants {
 
     const val PORTRAIT = "http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png"
 
+    const val PORTRAIT_TYPE_PRIVATE = 0
+    const val PORTRAIT_TYPE_GROUP = 1
+    const val PORTRAIT_TYPE_DISCUSSION = 2
+    const val PORTRAIT_TYPE_ROME_CHAT = 3
+
+    const val CHAT_TYPE_UNDEFAULT = -1
+    const val CHAT_TYPE_PRIVATE = 0
+    const val CHAT_TYPE_GROUP = 1
+    const val CHAT_TYPE_DISCUSSION = 2
+    const val CHAT_TYPE_ROME_CHAT = 3
+
 }

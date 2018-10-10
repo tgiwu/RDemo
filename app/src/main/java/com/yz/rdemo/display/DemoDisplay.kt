@@ -97,12 +97,12 @@ class DemoDisplay(): IMainDisplay, IOperationDisplay {
 
     override fun showPrivateChat(targetId: String) {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
-        RongIM.getInstance().startConversation(mActivity, Conversation.ConversationType.PRIVATE, "idid", "idid")
+        RongIM.getInstance().startConversation(mActivity, Conversation.ConversationType.PRIVATE, targetId, "idid")
     }
 
     override fun showDiscussionChat(ids: List<String>, title: String) {
         Preconditions.checkNotNull(mActivity, Throwable("activity is null"))
-        RongIM.getInstance().createDiscussionChat(mActivity, listOf("1", "2", "3"), "discussion", object : RongIMClient.CreateDiscussionCallback() {
+        RongIM.getInstance().createDiscussionChat(mActivity, ids, "discussion", object : RongIMClient.CreateDiscussionCallback() {
             override fun onSuccess(p0: String?) {
                 Log.i("zhy", "create success $p0")
             }

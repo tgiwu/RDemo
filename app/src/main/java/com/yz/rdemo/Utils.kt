@@ -1,8 +1,10 @@
 package com.yz.rdemo
 
 import android.app.ActivityManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import io.rong.imkit.RongIM
 import io.rong.imlib.RongIMClient
@@ -39,4 +41,42 @@ object Utils {
         }
         return ""
     }
+
+    fun getDefaultUri(context: Context, type: Int) : Uri {
+        val res = context.resources
+        val strBuilder = StringBuilder()
+        strBuilder.append(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        strBuilder.append("://")
+        strBuilder.append(res.getResourcePackageName(io.rong.imkit.R.drawable.rc_default_portrait))
+        strBuilder.append("/")
+        strBuilder.append(res.getResourceTypeName(io.rong.imkit.R.drawable.rc_default_portrait))
+        strBuilder.append("/")
+        when (type) {
+            0,3 -> {
+                strBuilder.append(res.getResourceEntryName(io.rong.imkit.R.drawable.rc_default_portrait))
+            }
+            1 -> {
+                strBuilder.append(res.getResourceEntryName(io.rong.imkit.R.drawable.rc_default_group_portrait))
+            }
+            2 -> {
+                strBuilder.append(res.getResourceEntryName(io.rong.imkit.R.drawable.rc_default_discussion_portrait))
+            }
+        }
+        return Uri.parse(strBuilder.toString())
+    }
+
+    fun toStringList(set :HashSet<String>) :List<String>{
+        val list = MutableList<String>(set.size) { ""}
+        var index = 0
+        val iterator = set.iterator()
+        while (iterator.hasNext()) {
+            list[index] = iterator.next()
+            index ++
+        }
+        for (string in list) {
+            Log.i("zhy", "id = $string")
+        }
+        return list
+    }
+
 }

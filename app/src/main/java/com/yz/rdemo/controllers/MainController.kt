@@ -3,7 +3,6 @@ package com.yz.rdemo.controllers
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.yz.rdemo.Constants
 import com.yz.rdemo.Constants.REQUEST_LOGIN_DO
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_CODE
 import com.yz.rdemo.Constants.REQUEST_REGISTRY_DO
@@ -72,7 +71,7 @@ class MainController<U: IMainController.IMainUi, D: IMainDisplay> : IMainControl
         RongIM.connect(token, object :RongIMClient.ConnectCallback() {
             override fun onSuccess(p0: String?) {
                 Log.i("zhy", "onSuccess $p0")
-                RongIM.getInstance().setCurrentUserInfo(UserInfo(p0, "zzz", Uri.parse(Constants.PORTRAIT)))
+                RongIM.getInstance().setCurrentUserInfo(UserInfo(p0, "zzz", Uri.parse("")))
                 RongIM.getInstance().setMessageAttachedUserInfo(true)
                 (mActivity as MainActivity).getDisplay()?.showOperationList()
             }

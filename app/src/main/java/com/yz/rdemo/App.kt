@@ -29,6 +29,7 @@ class App: Application() {
 
         RongIM.setGroupInfoProvider({ id -> Group(id, id, Uri.parse(Constants.PORTRAIT)) }, true)
 
+
     }
 
     override fun attachBaseContext(base: Context?) {

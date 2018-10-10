@@ -1,8 +1,11 @@
 package com.yz.rdemo.controllers
 
+import android.content.ContentResolver
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.yz.rdemo.Constants
+import com.yz.rdemo.Utils
 import com.yz.rdemo.activities.BaseActivity
 import com.yz.rdemo.display.IDisplay
 import com.yz.rdemo.display.IOperationDisplay
@@ -48,24 +51,24 @@ class OperationListController<U : IOperationController.IOperationUI, D: IOperati
 
     override fun onListFriends() {
         val ui = mActivity?.supportFragmentManager?.findFragmentByTag("operation") as? IOperationController.IListUI
-        ui?.onListFriends(listOf(ListItem("13466739595", "5", Uri.parse(Constants.PORTRAIT), 0),
-                ListItem("13466739596", "6", Uri.parse(Constants.PORTRAIT), 0)))
+        ui?.onListFriends(listOf(ListItem("13466739595", "5", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_PRIVATE), 0),
+                ListItem("13466739596", "6", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_PRIVATE), 0)))
     }
 
     override fun onListRomes() {
         val ui = mActivity?.supportFragmentManager?.findFragmentByTag("operation") as? IOperationController.IListUI
-        ui?.onListRome(listOf(ListItem(Constants.ROME_ID, "rome", Uri.parse(Constants.PORTRAIT), 0)))
+        ui?.onListRome(listOf(ListItem(Constants.ROME_ID, "rome", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_DISCUSSION), 0)))
     }
 
     override fun onListFriendsMulti() {
         val ui = mActivity?.supportFragmentManager?.findFragmentByTag("operation") as? IOperationController.IListUI
-        ui?.onListFriendForDiscussion(listOf(ListItem("13466739595", "5", Uri.parse(Constants.PORTRAIT), 1),
-                ListItem("13466739596", "6", Uri.parse(Constants.PORTRAIT), 1)))
+        ui?.onListFriendForDiscussion(listOf(ListItem("13466739595", "5", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_PRIVATE), 1),
+                ListItem("13466739596", "6", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_PRIVATE), 1)))
     }
 
     override fun onListGroup() {
         val ui = mActivity?.supportFragmentManager?.findFragmentByTag("operation") as? IOperationController.IListUI
-        ui?.onListGroup(listOf(ListItem(Constants.GROUP_ID, "group", Uri.parse(Constants.PORTRAIT), 0)))
+        ui?.onListGroup(listOf(ListItem(Constants.GROUP_ID, "group", Utils.getDefaultUri(mActivity!!, Constants.PORTRAIT_TYPE_GROUP), 0)))
     }
 
     override fun onRequestPrivate(targetId: String) {
