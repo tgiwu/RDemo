@@ -66,7 +66,7 @@ object Utils {
     }
 
     fun toStringList(set :HashSet<String>) :List<String>{
-        val list = MutableList<String>(set.size) { ""}
+        val list = MutableList(set.size) { ""}
         var index = 0
         val iterator = set.iterator()
         while (iterator.hasNext()) {

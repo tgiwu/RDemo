@@ -5,6 +5,6 @@ interface IMainDisplay:IDisplay {
     fun showLogin()
     fun showOperationList()
     fun showConversationList()
-    fun showErrorToast(message:String)
-    fun showErrorToast(message: Int)
+    fun showBegin()
+
 }

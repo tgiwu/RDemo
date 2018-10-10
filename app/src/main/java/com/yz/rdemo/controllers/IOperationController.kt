@@ -17,9 +17,8 @@ interface IOperationController<U: IOperationController.IOperationUI, D: IOperati
     fun onListFriendsMulti()
     fun onListGroup()
 
-    interface IOperationUI {
-        fun showErrorToast(error:String)
-    }
+    interface IOperationUI
+
     interface IListUI : IOperationUI {
         fun onListFriends(lists: List<ListItem>)
         fun onListGroup(lists: List<ListItem>)

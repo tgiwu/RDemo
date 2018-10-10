@@ -14,6 +14,6 @@ class MainActivity : BaseActivity<IMainController<IMainController.IMainUi, IMain
     override fun provideDisplay(): IMainDisplay = DemoDisplay()
 
     override fun onFirstAttach() {
-        getDisplay()?.showLogin()
+        getDisplay()?.showBegin()
     }
 }

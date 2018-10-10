@@ -13,6 +13,7 @@ import com.yz.rdemo.controllers.IOperationController
 import com.yz.rdemo.net.model.ListItem
 import kotlinx.android.synthetic.main.operation_list_layout.*
 import android.support.v7.widget.DividerItemDecoration
+import android.widget.Toast
 import com.yz.rdemo.Constants
 import com.yz.rdemo.activities.OperationListActivity
 
@@ -57,6 +58,7 @@ class OperationListFragment: Fragment(),IOperationController.IListUI, ListItemAd
     }
 
     override fun onClick(v: View?) {
+        Log.i("zhy", "on fab click")
         mAdapter!!.getSelected()?.let {
             (activity as OperationListActivity).getController()?.onRequestDiscussion(it, "title")
         }
@@ -92,9 +94,6 @@ class OperationListFragment: Fragment(),IOperationController.IListUI, ListItemAd
         if (operation_item_list_txt.visibility == View.VISIBLE) operation_item_list_txt.visibility = View.GONE
         mAdapter?.changeList(lists)
         mType = Constants.CHAT_TYPE_ROME_CHAT
-    }
-
-    override fun showErrorToast(error: String) {
     }
 
 }

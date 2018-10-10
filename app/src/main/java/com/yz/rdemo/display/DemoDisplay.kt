@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.google.common.base.Preconditions
 import com.yz.rdemo.R
 import com.yz.rdemo.activities.OperationListActivity
+import com.yz.rdemo.fragments.BeginFragment
 import com.yz.rdemo.fragments.LoginFragment
 import com.yz.rdemo.fragments.OperationListFragment
 import com.yz.rdemo.fragments.RegistryFragment
@@ -54,6 +55,13 @@ class DemoDisplay(): IMainDisplay, IOperationDisplay {
                 getTransaction()?.add(R.id.main_content, LoginFragment.instance, "login")?.commit()
             else
                 getTransaction()?.replace(R.id.main_content, LoginFragment.instance, "login")?.commit()
+        }
+    }
+
+    override fun showBegin() {
+        Preconditions.checkNotNull(mActivity, NullPointerException("activity is null"))
+        if (checkMainContent()) {
+                getTransaction()?.add(R.id.main_content, BeginFragment.instance, "begin")?.commit()
         }
     }
 

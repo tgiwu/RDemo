@@ -31,4 +31,6 @@ interface IMainController<U : IMainController.IMainUi, D: IMainDisplay>: IContro
         fun onLoginSuccess()
         fun onError(requestCode: Int, message: String?)
     }
+
+    interface IBeginUi:IMainUi
 }

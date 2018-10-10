@@ -7,23 +7,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.yz.rdemo.R
 import com.yz.rdemo.Utils.toStringList
 import com.yz.rdemo.net.model.ListItem
 
-class ListItemAdapter(context: Context): RecyclerView.Adapter<ListItemAdapter.VH>() {
+class ListItemAdapter(context: Context): RecyclerView.Adapter<ListItemAdapter.VH>(), CompoundButton.OnCheckedChangeListener {
     private var mList: List<ListItem>? = null
+
     private var mOnItemClickListener : IOnItemClickListener? = null
     private var mSelectedSet = HashSet<String>()
     private val mContext = context
 
     fun changeList(list: List<ListItem>) {
-        Log.i("zhy", "changeList")
         mList = list
         mSelectedSet.clear()
         notifyDataSetChanged()
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        Log.i("zhy", " changed listener $isChecked")
+        buttonView?.let {
+            Log.i("zhy", " tag ${it.tag}")
+            val checkBox = it as CheckBox
+            Log.i("zhy", "checkbox tag ${checkBox.tag}")
+            checkBox.isChecked = isChecked
+            if (isChecked) {
+                mSelectedSet.add(it.getTag().toString())
+            } else {
+                mSelectedSet.remove(it.getTag().toString())
+            }
+        }
     }
 
     fun setOnItemClick(l: IOnItemClickListener) {
@@ -31,6 +47,7 @@ class ListItemAdapter(context: Context): RecyclerView.Adapter<ListItemAdapter.VH
     }
 
     fun getSelected() : List<String>? {
+        Log.i("zhy", "get selected ${mSelectedSet.size}")
         if (mSelectedSet.size == 0) return null
         return toStringList(mSelectedSet)
     }
@@ -53,17 +70,13 @@ class ListItemAdapter(context: Context): RecyclerView.Adapter<ListItemAdapter.VH
         }
         vh.view.setOnClickListener {
             if (vh.checkbox.visibility == View.VISIBLE) {
-                if (mSelectedSet.contains(mList!![position].id)) {
-                    mSelectedSet.remove(mList!![position].id)
-                    vh.checkbox.isChecked = false
-                } else {
-                    mSelectedSet.add(mList!![position].id)
-                    vh.checkbox.isChecked = true
-                }
+                vh.checkbox.isChecked = !vh.checkbox.isChecked
             } else {
                 mOnItemClickListener?.onItemClick(mList!![position])
             }
         }
+        vh.checkbox.tag = mList!![position].id
+        vh.checkbox.setOnCheckedChangeListener(this)
     }
 
     inner class VH(v: View) : RecyclerView.ViewHolder(v){

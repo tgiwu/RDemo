@@ -81,7 +81,12 @@ class OperationListController<U : IOperationController.IOperationUI, D: IOperati
     }
 
     override fun onRequestDiscussion(ids: List<String>, title: String) {
-        mDisplay?.showDiscussionChat(ids, title)
+        if (ids.isEmpty()) {
+            mDisplay?.showErrorToast("Select one person to discussion at least")
+            return
+        } else {
+            mDisplay?.showDiscussionChat(ids, title)
+        }
     }
 
     override fun onRequestGroup(groupId: String, title: String) {
