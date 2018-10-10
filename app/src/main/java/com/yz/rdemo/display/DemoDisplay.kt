@@ -2,6 +2,7 @@ package com.yz.rdemo.display
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -92,14 +93,24 @@ class DemoDisplay(): IMainDisplay, IOperationDisplay {
     }
 
     override fun showErrorToast(message: String) {
+        val view = mActivity?.window?.decorView?.findViewById<FrameLayout>(R.id.main_content)
         mActivity?.let {
-            it.runOnUiThread { Toast.makeText(it, message, Toast.LENGTH_SHORT).show() }
+            it.runOnUiThread {
+                view?.let { v ->
+                    Snackbar.make(v, message, Snackbar.LENGTH_LONG).show()
+                }
+            }
         }
     }
 
     override fun showErrorToast(message: Int) {
+        val view = mActivity?.window?.decorView?.findViewById<FrameLayout>(R.id.main_content)
         mActivity?.let {
-            it.runOnUiThread{ Toast.makeText(it, message, Toast.LENGTH_SHORT).show()}
+            it.runOnUiThread {
+                view?.let { v ->
+                    Snackbar.make(v, message, Snackbar.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

@@ -59,9 +59,7 @@ class OperationListFragment: Fragment(),IOperationController.IListUI, ListItemAd
 
     override fun onClick(v: View?) {
         Log.i("zhy", "on fab click")
-        mAdapter!!.getSelected()?.let {
-            (activity as OperationListActivity).getController()?.onRequestDiscussion(it, "title")
-        }
+        (activity as OperationListActivity).getController()?.onRequestDiscussion(mAdapter!!.getSelected(), "title")
     }
 
     override fun onListFriends(lists: List<ListItem>) {

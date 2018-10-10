@@ -80,8 +80,8 @@ class OperationListController<U : IOperationController.IOperationUI, D: IOperati
         mDisplay?.showRomeChat(chatRomeId)
     }
 
-    override fun onRequestDiscussion(ids: List<String>, title: String) {
-        if (ids.isEmpty()) {
+    override fun onRequestDiscussion(ids: List<String>?, title: String) {
+        if (null == ids || ids.isEmpty()) {
             mDisplay?.showErrorToast("Select one person to discussion at least")
             return
         } else {

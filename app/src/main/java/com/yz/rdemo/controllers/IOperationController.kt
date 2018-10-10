@@ -9,7 +9,7 @@ interface IOperationController<U: IOperationController.IOperationUI, D: IOperati
 
     fun onRequestPrivate(targetId: String)
     fun onRequestRome(chatRomeId:String)
-    fun onRequestDiscussion(ids: List<String>, title: String)
+    fun onRequestDiscussion(ids: List<String>?, title: String)
     fun onRequestGroup(groupId: String,title: String)
 
     fun onListFriends()
